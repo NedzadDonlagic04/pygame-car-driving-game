@@ -1,5 +1,6 @@
 import pygame
 from sys import exit
+from classes import *
 
 class Game:
     def __init__(self, width, height, title) -> None:
@@ -11,6 +12,10 @@ class Game:
         
         pygame.display.set_caption(title)
 
+        self.CLOCK = MyClock(60)
+
+        self.BACKGROUND = BackgroundImage(width, height, './img/road.png')
+
     def quit(self) -> None:
         pygame.quit()
         exit()
@@ -21,7 +26,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.quit()
 
+            self.BACKGROUND.draw(self.SCREEN)
             pygame.display.update()
+            self.CLOCK.tick()
             
 
 if __name__ == '__main__':
