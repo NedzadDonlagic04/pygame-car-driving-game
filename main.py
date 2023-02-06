@@ -16,9 +16,10 @@ class Game:
 
         self.BACKGROUND = BackgroundImage(width, height, './img/road.png')
 
+        self.PLAYER = Player(width, height, './img/player.png')
+
     def quit(self) -> None:
         pygame.quit()
-        exit()
     
     def run(self) -> None:
         while True:
@@ -27,6 +28,10 @@ class Game:
                     self.quit()
 
             self.BACKGROUND.draw(self.SCREEN)
+
+            self.PLAYER.update()
+            self.PLAYER.draw(self.SCREEN)
+
             pygame.display.update()
             self.CLOCK.tick()
             
