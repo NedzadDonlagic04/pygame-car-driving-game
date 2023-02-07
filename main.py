@@ -14,9 +14,11 @@ class Game:
 
         self.CLOCK = MyClock(60)
 
-        self.BACKGROUND = BackgroundImage(width, height, './img/road.png')
+        self.BACKGROUND = BackgroundImage(width, height)
 
-        self.PLAYER = Player(width, height, './img/player.png')
+        self.PLAYER = Player(width, height)
+
+        self.ENEMY = RandomEnemy(width)
 
     def quit(self) -> None:
         pygame.quit()
@@ -31,6 +33,9 @@ class Game:
 
             self.PLAYER.update()
             self.PLAYER.draw(self.SCREEN)
+
+            self.ENEMY.update()
+            self.ENEMY.draw(self.SCREEN)
 
             pygame.display.update()
             self.CLOCK.tick()
