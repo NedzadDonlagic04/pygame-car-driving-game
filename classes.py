@@ -42,9 +42,6 @@ class Player(pygame.sprite.Sprite):
         # and which can't be driven on
         percent = width * 0.2
 
-        # Used to offset the top and bottom parts of the car from screen edge
-        OFFSET_CARS = 5
-
         self.RIGHT_BORDER = width - percent
         self.LEFT_BORDER = percent
         self.TOP_BORDER = OFFSET_CARS
@@ -78,7 +75,7 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
 class RandomEnemy(pygame.sprite.Sprite):
-    def __init__(self, width) -> None:
+    def __init__(self, width, height) -> None:
         super().__init__()
 
         rng = random.choice([1, 2])
@@ -92,17 +89,19 @@ class RandomEnemy(pygame.sprite.Sprite):
         # The top point is 20% of the whole width
         # Index 1 is for the cars in the right track
         # The top point is the entire width - 40% of the entire width
-        percent = [width * 0.2, width - width * 0.4]
-
-        # Used to offset the top and bottom parts of the car from screen edge
-        OFFSET_CARS = 5
+        percent = [width * 0.3, width - width * 0.45]
 
         self.SPEED = 5
 
-        self.rect = self.image.get_rect( topleft = (percent[rng - 1], OFFSET_CARS) )
+        self.rect = self.image.get_rect( bottomleft = (percent[rng - 1], -OFFSET_CARS) )
+
+        self.HEIGHT = height
 
     def update(self) -> None:
-        self.rect.bottom += self.SPEED
+        self.rect.top += self.SPEED
+
+        if self.rect.top > self.HEIGHT:
+            self.kill()
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
